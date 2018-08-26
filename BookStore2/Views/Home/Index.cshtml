@@ -1,0 +1,64 @@
+﻿@{
+    bool isAdmin = Request.Cookies["IsAdmin"]?.Value == "True" ? true : false;
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Книжный магазин</title>
+</head>
+<body>
+    <div>
+        <h3>Распродажа книг</h3>
+
+        <table class="table">
+            <tr class="header">
+                <td><p>Обложка</p></td>
+                <td><p>Название книги</p></td>
+                <td><p>Автор</p></td>
+                <td><p>Цена</p></td>
+                <td></td>
+                <td>
+                    @if (isAdmin)
+                    {
+                        <p><a href="/Book/Create" class="btn btn-primary">Добавить книгу</a></p>
+
+                    }
+                </td>
+            </tr>
+            @foreach (var b in ViewBag.Books)
+            {
+                <tr>
+                    <td><p><img src='@Url.Content("~/"+b.ImagePath)' alt="@b.Name" /> </p></td>
+                    <td><p>@b.Name</p></td>
+                    <td><p>@b.Author</p></td>
+                    <td><p>@b.Price</p></td>
+                    <td><p><a href="/Book/ChoiceBook/@b.Id" class="btn btn-success">Выбрать</a></p></td>
+                    @if (isAdmin)
+                    {
+                        <td>
+                            <p class="btn-group" role="group" aria-label="...">
+                                <a href="/Book/EditBook/@b.Id" class="btn btn-primary">Редактировать</a>
+                                <a href="/Book/Delete/@b.Id" class="btn btn-danger">Удалить</a>
+                            </p>
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="footer">
+        @section Footer {
+        <p>Made by Scorpion Soft.</p>
+        }
+    </div>
+    
+
+</body>
+</html>

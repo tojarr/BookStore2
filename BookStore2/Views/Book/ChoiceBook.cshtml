@@ -1,0 +1,31 @@
+﻿@using BookStore2.Models
+@model IEnumerable<Book>
+
+@{
+    ViewBag.Title = "ChoiceBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@foreach (var b in Model)
+{
+    if (b.Id == ViewBag.Id)
+    {
+        <div>
+            <h2>Обложка: </h2><p><img src='@Url.Content("~/"+b.ImagePath)' alt="@b.Name" /></p>
+            <h2>Автор: </h2><p class="bookDesk">@b.Author</p>
+            <h2>Название: </h2><p class="bookDesk">@b.Name</p>
+            <h2>Цена: </h2><p class="bookDesk">@b.Price</p>
+            <h2>Описание: </h2>
+            <textarea cols="150" id="text" name="text" rows="10">@b.Description</textarea>
+            @*@Html.TextArea("text", b.Description, 10, 150, null)*@
+        </div>
+        <div class="bay">
+            <p><a href="/Book/ThankYou" class="btn btn-success">Купить</a></p>
+        </div>
+    }
+}
+
+@section Footer {
+    Made by Scorpion Soft.
+}

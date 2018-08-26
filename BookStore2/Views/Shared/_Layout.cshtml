@@ -1,0 +1,48 @@
+﻿@{
+    string login = User.Identity.Name;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div>
+        <nav class="navbar navbar-inverse">
+            <div class="header-menu-left">
+                <ul class="nav nav-pills">
+                    <li>
+                        @Html.ActionLink("Главная", "Index", "Home")
+                    </li>
+            </div>
+            <div class="header-menu-right">
+                <ul class="nav nav-pills">
+                    <li>
+                        @Html.ActionLink("Регистрация", "Register", "Account")
+                    </li>
+
+                    @if (login != "")
+                    {
+                        <li id="hello">Здравствуйте: </li>
+                        <li class="loginMenu">@login</li>
+                        <li>@Html.ActionLink("Выйти", "Logout", "Account")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Войти на сайт", "Login", "Account")</li>
+                    }
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    @RenderBody()
+    <footer class="footer navbar-fixed-bottom panel-footer">@RenderSection("Footer", false)</footer>
+</body>
+</html>

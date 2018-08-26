@@ -1,0 +1,81 @@
+﻿body {
+    font-size: 13px;
+    font-family: Verdana, Arial, Helvetica, Sans-Serif;
+    background-color: honeydew;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom:60px;
+}
+.footer{
+    text-align:center;
+}
+
+.bay{
+    margin-top:20px;
+}
+.view-thank-you{
+    text-align:center;
+    padding-top:90px;
+}
+
+nav {
+    display: block;
+}
+
+.header-menu-left {
+    float: left;
+    width: 50%;
+}
+
+.header-menu-right {
+    float: right;
+    width: 50%;
+}
+
+    .header-menu-right .nav {
+        float:right;
+    }
+
+#hello {
+    padding-top: 10px;
+    color:white;
+}
+
+.menu {
+    padding-left: 10px;
+}
+
+.loginMenu {
+    color: red;
+    padding-top: 10px;
+}
+
+.menu td {
+    display: inline;
+    padding-left: 10px;
+}
+
+.menu a:hover {
+    /*color: ;*/
+}
+
+table {
+    vertical-align: middle;
+    text-align: left;
+}
+
+.header {
+    font-weight: bold;
+}
+
+td {
+    padding-right: 10px;
+}
+
+input {
+    width: 150px;
+}
+
+.bookDesk {
+    font-size: 18px;
+}
