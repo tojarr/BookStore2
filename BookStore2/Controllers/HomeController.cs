@@ -4,37 +4,30 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BookStore2.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace BookStore2.Controllers
 {
 
     public class HomeController : Controller
     {
-
         // создаем контекст данных
         BookContext db = new BookContext();
 
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            // получаем из бд все объекты Book & User
-            IEnumerable<Book> books = db.Books;
-            IEnumerable<User> users = db.Users;
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
 
-            ViewBag.Books = books;
-            ViewBag.Users = users;
+            // получаем из бд все объекты Book & User
+            IEnumerable<Book> books = db.Books.ToList();
+
+            //ViewBag.Books = books;
 
             // возвращаем представление
-            return View();
+            return View(books.ToPagedList(pageNumber, pageSize));
 
         }
-
-        //[Authorize]
-        //public ActionResult IndexAdmin(User user)
-        //{
-
-        //    return View("~/View/Home/Index.cshtml");
-        //}
-
-        
     }
 }

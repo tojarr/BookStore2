@@ -26,12 +26,36 @@ namespace BookStore2.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Create(Book book)
+        public ActionResult Create(BookViewModel model)
         {
-            db.Entry(book).State = EntityState.Added;
-            db.SaveChanges();
+            if (string.IsNullOrEmpty((model.Price).ToString()))
+            {
+                ModelState.AddModelError("Price", "Некорректная цена");
+            }
+            else if (model.Price < 0)
+            {
+                ModelState.AddModelError("Price", "Недопустимая цифра");
+            }
 
-            return RedirectToAction("Index", "Home");
+            if (ModelState.IsValid)
+            {
+                Book book = new Book();
+                book.ImagePath = model.ImagePath;
+                book.Name = model.Name;
+                book.Author = model.Author;
+                book.Price = model.Price;
+                book.Description = model.Description;
+
+                ViewBag.Message = "Валидация пройдена";
+                db.Entry(book).State = EntityState.Added;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Message = "Запрос не прошел валидацию";
+            return View(model);
+
+            
         }
 
         [HttpGet]
@@ -59,12 +83,27 @@ namespace BookStore2.Controllers
         [HttpPost]
         public ActionResult EditBook(Book book)
         {
+            if (string.IsNullOrEmpty((book.Price).ToString()))
+            {
+                ModelState.AddModelError("Price", "Некорректная цена");
+            }
+            else if (book.Price < 0)
+            {
+                ModelState.AddModelError("Price", "Недопустимая цифра");
+            }
 
-            db.Entry(book).State = EntityState.Modified;
-            db.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                ViewBag.Message = "Валидация пройдена";
+                db.Entry(book).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
 
+            ViewBag.Message = "Запрос не прошел валидацию";
+            return View(book);
 
-            return RedirectToAction("Index", "Home");
+           
         }
 
         [HttpGet]

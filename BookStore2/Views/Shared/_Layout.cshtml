@@ -22,9 +22,13 @@
             </div>
             <div class="header-menu-right">
                 <ul class="nav nav-pills">
-                    <li>
-                        @Html.ActionLink("Регистрация", "Register", "Account")
-                    </li>
+                    @if (login == "")
+                    {
+                        <li>
+                            @Html.ActionLink("Регистрация", "Register", "Account")
+                        </li>
+                    }
+
 
                     @if (login != "")
                     {
@@ -43,6 +47,10 @@
     </div>
 
     @RenderBody()
-    <footer class="footer navbar-fixed-bottom panel-footer">@RenderSection("Footer", false)</footer>
+    <footer class="footer navbar-fixed-bottom panel-footer">
+        <div>
+            <p>Made by Scorpion Soft.</p>
+        </div>
+        </footer>@*@RenderSection("Footer", false)</footer>*@
 </body>
 </html>

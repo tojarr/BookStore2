@@ -1,4 +1,4 @@
-﻿@model BookStore2.Models.Book
+﻿@model BookStore2.Models.BookViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -43,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", min = "0" } })
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
             </div>
         </div>

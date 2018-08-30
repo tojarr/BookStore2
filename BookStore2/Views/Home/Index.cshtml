@@ -1,4 +1,7 @@
-﻿@{
+﻿@model PagedList.IPagedList<BookStore2.Models.Book>
+@using PagedList.Mvc;
+
+@{
     bool isAdmin = Request.Cookies["IsAdmin"]?.Value == "True" ? true : false;
 }
 
@@ -32,7 +35,7 @@
                     }
                 </td>
             </tr>
-            @foreach (var b in ViewBag.Books)
+            @foreach (var b in Model)
             {
                 <tr>
                     <td><p><img src='@Url.Content("~/"+b.ImagePath)' alt="@b.Name" /> </p></td>
@@ -53,12 +56,19 @@
             }
         </table>
     </div>
-    <div class="footer">
+
+    <br />
+    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    <br />
+
+    @*<div class="footer">
         @section Footer {
-        <p>Made by Scorpion Soft.</p>
+            <p>Made by Scorpion Soft.</p>
         }
-    </div>
-    
+    </div>*@
+
 
 </body>
 </html>
