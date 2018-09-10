@@ -23,22 +23,22 @@ namespace BookStore2.Controllers
                 User user = null;
                 using (BookContext db = new BookContext())
                 {
-                    user = db.Users.FirstOrDefault(u => u.Login == model.Login);
+                    user = db.Users.FirstOrDefault(u => u.Email == model.Email);
                 }
                 if (user == null)
                 {
                     // создаем нового пользователя
                     using (BookContext db = new BookContext())
                     {
-                        db.Users.Add(new User { Login = model.Login, Pass = model.Pass });
+                        db.Users.Add(new User { Email = model.Email, Pass = model.Pass });
                         db.SaveChanges();
 
-                        user = db.Users.Where(u => u.Login == model.Login && u.Pass == model.Pass).FirstOrDefault();
+                        user = db.Users.Where(u => u.Email == model.Email && u.Pass == model.Pass).FirstOrDefault();
                     }
                     // если пользователь удачно добавлен в бд
                     if (user != null)
                     {
-                        FormsAuthentication.SetAuthCookie(model.Login, true);
+                        FormsAuthentication.SetAuthCookie(model.Email, true);
                         HttpContext.Response.Cookies["IsAdmin"].Value = user.IsAdmin.ToString();
                         return RedirectToAction("Index", "Home");
                     }
@@ -68,12 +68,12 @@ namespace BookStore2.Controllers
                 User user = null;
                 using (BookContext db = new BookContext())
                 {
-                    user = db.Users.FirstOrDefault(u => u.Login == model.Login && u.Pass == model.Pass);
+                    user = db.Users.FirstOrDefault(u => u.Email == model.Email && u.Pass == model.Pass);
 
                 }
                 if (user != null)
                 {
-                    FormsAuthentication.SetAuthCookie(model.Login, true);
+                    FormsAuthentication.SetAuthCookie(model.Email, true);
                     //HttpContext.Response.Cookies["Login"].Value = user.Login;
                     //HttpContext.Response.Cookies["Pass"].Value = user.Pass;
                     HttpContext.Response.Cookies["IsAdmin"].Value = user.IsAdmin.ToString();
@@ -83,7 +83,7 @@ namespace BookStore2.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Пользователя с таким логином и паролем нет");
+                    ModelState.AddModelError("", "Пользователя с таким Email и паролем нет");
                 }
             }
 

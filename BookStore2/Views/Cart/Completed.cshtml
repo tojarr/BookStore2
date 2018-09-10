@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Завершение покупки";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title </h2>
+
+<div>
+    <p>Ваша покупка оформлена.</p>
+    <p>На ваш почтовый адрес выслано письмо.</p>
+    <div>
+        @Html.ActionLink("Вернутся на главную страницу", "Index", "Home")
+    </div>
+</div>
+

@@ -10,8 +10,10 @@ namespace BookStore2.Models
     public class LoginModel
     {
         [Required]
-        [DisplayName("Логин")]
-        public string Login { get; set; }
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}",
+            ErrorMessage = "Некорректный адрес")]
+        [DisplayName("Email")]
+        public string Email { get; set; }
 
         [Required]
         [DisplayName("Пароль")]
@@ -22,8 +24,10 @@ namespace BookStore2.Models
     public class RegisterModel
     {
         [Required]
-        [DisplayName("Логин")]
-        public string Login { get; set; }
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}",
+            ErrorMessage = "Некорректный адрес")]
+        [DisplayName("Email")]
+        public string Email { get; set; }
 
         [Required]
         [DisplayName("Пароль")]

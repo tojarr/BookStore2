@@ -26,5 +26,8 @@ namespace BookStore2.Models
         //Image
         [DisplayName("Путь к картинке")]
         public string ImagePath { get; set; }
+        //Quantity
+        [DisplayName("Кол-во на складе")]
+        public int QuantityInStorage { get; set; }
     }
 }

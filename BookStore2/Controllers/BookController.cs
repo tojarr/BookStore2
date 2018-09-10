@@ -30,9 +30,18 @@ namespace BookStore2.Controllers
         {
             if (string.IsNullOrEmpty((model.Price).ToString()))
             {
-                ModelState.AddModelError("Price", "Некорректная цена");
+                ModelState.AddModelError("QuantityInStorage", "Некорректный ввод");
             }
             else if (model.Price < 0)
+            {
+                ModelState.AddModelError("QuantityInStorage", "Недопустимая цифра");
+            }
+
+            if (string.IsNullOrEmpty((model.QuantityInStorage).ToString()))
+            {
+                ModelState.AddModelError("Price", "Некорректная цена");
+            }
+            else if (model.QuantityInStorage < 0)
             {
                 ModelState.AddModelError("Price", "Недопустимая цифра");
             }
@@ -40,10 +49,18 @@ namespace BookStore2.Controllers
             if (ModelState.IsValid)
             {
                 Book book = new Book();
-                book.ImagePath = model.ImagePath;
+                if(model.ImagePath == null)
+                {
+                    book.ImagePath = "/Images/DefaultForBook.png";
+                }
+                else
+                {
+                    book.ImagePath = model.ImagePath;
+                }
                 book.Name = model.Name;
                 book.Author = model.Author;
                 book.Price = model.Price;
+                book.QuantityInStorage = model.QuantityInStorage;
                 book.Description = model.Description;
 
                 ViewBag.Message = "Валидация пройдена";
@@ -92,9 +109,22 @@ namespace BookStore2.Controllers
                 ModelState.AddModelError("Price", "Недопустимая цифра");
             }
 
+            if (string.IsNullOrEmpty((book.QuantityInStorage).ToString()))
+            {
+                ModelState.AddModelError("QuantityInStorage", "Некорректный ввод");
+            }
+            else if (book.QuantityInStorage < 0)
+            {
+                ModelState.AddModelError("QuantityInStorage", "Недопустимая цифра");
+            }
+
             if (ModelState.IsValid)
             {
                 ViewBag.Message = "Валидация пройдена";
+                if (book.ImagePath == null)
+                {
+                    book.ImagePath = "/Images/DefaultForBook.png";
+                }
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
@@ -140,18 +170,12 @@ namespace BookStore2.Controllers
         [Authorize]
         public ActionResult ChoiceBook(int id)
         {
-            // получаем из бд все объекты Book & User
+            // получаем из бд все объекты Book
             var books = db.Books;
 
             ViewBag.Id = id;
 
             return View(books);
-        }
-
-        public ActionResult ThankYou()
-        {
-
-            return View();
         }
     }
 }

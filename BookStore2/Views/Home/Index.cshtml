@@ -1,8 +1,11 @@
 ﻿@model PagedList.IPagedList<BookStore2.Models.Book>
 @using PagedList.Mvc;
+@using BookStore2.Models;
 
 @{
     bool isAdmin = Request.Cookies["IsAdmin"]?.Value == "True" ? true : false;
+    bool IsAuth = User.Identity.IsAuthenticated;
+    Cart cart = (Cart)Session["Cart"];
 }
 
 @{
@@ -26,6 +29,8 @@
                 <td><p>Название книги</p></td>
                 <td><p>Автор</p></td>
                 <td><p>Цена</p></td>
+                <td><p>Кол-во</p></td>
+                <td></td>
                 <td></td>
                 <td>
                     @if (isAdmin)
@@ -37,12 +42,39 @@
             </tr>
             @foreach (var b in Model)
             {
+                int cartQuantity = 0;
+                if (cart != null)
+                {
+                    CartLine cartLine = cart.Lines.FirstOrDefault(x => x.Book.Id == b.Id);
+                    if(cartLine != null)
+                    {
+                        cartQuantity = cartLine.Quantity;
+                    }
+                }
+                int quantityBook = b.QuantityInStorage - cartQuantity;
                 <tr>
                     <td><p><img src='@Url.Content("~/"+b.ImagePath)' alt="@b.Name" /> </p></td>
                     <td><p>@b.Name</p></td>
                     <td><p>@b.Author</p></td>
                     <td><p>@b.Price</p></td>
-                    <td><p><a href="/Book/ChoiceBook/@b.Id" class="btn btn-success">Выбрать</a></p></td>
+                    <td><p>@(quantityBook)</p></td>
+                    <td><p><a href="/Book/ChoiceBook/@b.Id" class="btn btn-success">Описание</a></p></td>
+                    @if (quantityBook > 0 && IsAuth)
+                    {
+                        using (Html.BeginForm("AddToCart", "Cart"))
+                        {
+                            @Html.Hidden("bookId", b.Id)
+                            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                            <td>
+                                <input type="submit" class="btn btn-success" value="В корзину" />
+                            </td>
+                        }
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+
                     @if (isAdmin)
                     {
                         <td>
@@ -64,10 +96,10 @@
     <br />
 
     @*<div class="footer">
-        @section Footer {
-            <p>Made by Scorpion Soft.</p>
-        }
-    </div>*@
+            @section Footer {
+                <p>Made by Scorpion Soft.</p>
+            }
+        </div>*@
 
 
 </body>

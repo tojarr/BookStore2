@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "CompletedError";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="color:red;">Ошибка!</h2>
+
+<div>
+    <h3>Недостаточное количество книг на складе!</h3>
+</div>
+<div>
+    @Html.ActionLink("Вернутся на главную страницу", "Index", "Home")
+</div>
+

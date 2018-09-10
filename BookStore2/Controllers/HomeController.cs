@@ -20,7 +20,7 @@ namespace BookStore2.Controllers
             int pageSize = 3;
             int pageNumber = (page ?? 1);
 
-            // получаем из бд все объекты Book & User
+            // получаем из бд все объекты Book
             IEnumerable<Book> books = db.Books.ToList();
 
             //ViewBag.Books = books;

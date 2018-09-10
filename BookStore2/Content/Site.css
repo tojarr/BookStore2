@@ -36,9 +36,33 @@ nav {
         float:right;
     }
 
+.cart-btn {
+    font-size: 13px;
+    margin-left: 5px;
+    margin-top:7px;
+    padding:10px 15px;
+    border-color: transparent;
+    background-color: transparent;
+    color: #337ab7;
+    text-decoration: none;
+}
+
+.cart-title{
+    margin:0px;
+}
+
+.cart-title-left {
+    width: 50%;
+    float: left;
+}
+.cart-title-right {
+    float: right;
+    width: 50%;
+}
+
 #hello {
-    padding-top: 10px;
-    color:white;
+    padding-top: 18px;
+    color: white;
 }
 
 .menu {
@@ -47,7 +71,7 @@ nav {
 
 .loginMenu {
     color: red;
-    padding-top: 10px;
+    padding-top: 18px;
 }
 
 .menu td {

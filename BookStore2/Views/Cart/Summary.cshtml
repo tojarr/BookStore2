@@ -1,0 +1,7 @@
+﻿@model BookStore2.Models.Cart
+
+<div>
+    @Html.ActionLink("Корзина", "Index", "Cart",
+    new { returnUrl = Request.Url.PathAndQuery}, 
+    new { @class = "btn btn-default navbar-btn cart-btn" })
+</div>

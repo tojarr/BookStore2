@@ -1,0 +1,62 @@
+﻿@model BookStore2.Models.CartIndexViewModel
+
+@{
+    ViewBag.Title = "Ваша корзина";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div class="text-left cart-title-left">
+        <h2 class="cart-title">@ViewBag.Title</h2>
+    </div>
+    <div class="text-right cart-title-right">
+        @using (Html.BeginForm("ClearCart", "Cart"))
+        {
+            @Html.HiddenFor(x => x.ReturnUrl)
+            <input class="btn btn-sm btn-primary" type="submit" value="Очистить корзину" />
+        }
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Количество</th>
+            <th>Наименование</th>
+            <th class="text-right">Цена</th>
+            <th class="text-right">Сумма</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Cart.Lines)
+        {
+            <tr>
+                <td class="text-center">@line.Quantity</td>
+                <td class="text-left">@line.Book.Name - @line.Book.Author</td>
+                <td class="text-right">@line.Book.Price.ToString()</td>
+                <td class="text-right">@((line.Quantity * line.Book.Price).ToString())</td>
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        @Html.Hidden("bookId", line.Book.Id)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        <input class="btn btn-sm btn-warning" type="submit" value="Удалить" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Итого</td>
+            <td class="text-right">@Model.Cart.ComputeTotalValue().ToString()</td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="text-center">
+    <a class="btn btn-primary btn-group" href="@Model.ReturnUrl">Продолжить покупки</a>
+    <a class="btn btn-success btn-group" href="/Cart/Completed">Подтвердить покупку</a>
+</div>

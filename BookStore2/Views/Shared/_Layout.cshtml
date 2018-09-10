@@ -16,7 +16,7 @@
         <nav class="navbar navbar-inverse">
             <div class="header-menu-left">
                 <ul class="nav nav-pills">
-                    <li>
+                    <li class="navbar-btn">
                         @Html.ActionLink("Главная", "Index", "Home")
                     </li>
             </div>
@@ -24,7 +24,7 @@
                 <ul class="nav nav-pills">
                     @if (login == "")
                     {
-                        <li>
+                        <li class="navbar-btn">
                             @Html.ActionLink("Регистрация", "Register", "Account")
                         </li>
                     }
@@ -34,11 +34,12 @@
                     {
                         <li id="hello">Здравствуйте: </li>
                         <li class="loginMenu">@login</li>
-                        <li>@Html.ActionLink("Выйти", "Logout", "Account")</li>
+                        <li>@Html.Action("Summary", "Cart")</li>
+                        <li class="navbar-btn">@Html.ActionLink("Выйти", "Logout", "Account")</li>
                     }
                     else
                     {
-                        <li>@Html.ActionLink("Войти на сайт", "Login", "Account")</li>
+                        <li class="navbar-btn">@Html.ActionLink("Войти на сайт", "Login", "Account")</li>
                     }
 
                 </ul>
