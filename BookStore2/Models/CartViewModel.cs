@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore2.Serveces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace BookStore2.Models
         {
             get { return lineCollection; }
         }
+
 
         public void AddItem(Book book, int quantity)//добавление в корзину продукта определенного количества
         {
@@ -58,7 +60,7 @@ namespace BookStore2.Models
             lineCollection.Clear();
         }
 
-        public List<CartLine> SendMail(string login, BookContext dataBase)
+        public List<CartLine> SendMail(string login, BookContext dataBase,IEmailSender _emailSender)
         {
             decimal sum = ComputeTotalValue();
             string shopList = "<tr><td>" +
@@ -84,27 +86,14 @@ namespace BookStore2.Models
                     + line.Book.Price + "</td><td align = \"right\">" +
                     (line.Quantity * line.Book.Price) + "</td></tr>";
             }
-
-            // отправитель - устанавливаем адрес и отображаемое в письме имя
-            MailAddress from = new MailAddress("matroskin0711test@gmail.com", "bookstore");
-            // кому отправляем
-            MailAddress to = new MailAddress(login);
-            // создаем объект сообщения
-            MailMessage m = new MailMessage(from, to);
-            // тема письма
-            m.Subject = "Покупка в книжном магазине";
-            // текст письма
-            m.Body = "<h2>Список ваших покупок.</h2>" + "<div><table class = 'table'>" + shopList + "</table></div>" +
+            string bodyMail = "<h2>Список ваших покупок.</h2>" + "<div><table class = 'table'>" + shopList + "</table></div>" +
                 "<div><p>" + login + " сумма вашей покупки - " + sum + "</p>" +
                 "<p>Спасибо за покупку!</p>" + "</div>";
-            // письмо представляет код html
-            m.IsBodyHtml = true;
-            // адрес smtp-сервера и порт, с которого будем отправлять письмо
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-            // логин и пароль
-            smtp.Credentials = new NetworkCredential("matroskin0711test@gmail.com", "LeOsEo623487");
-            smtp.EnableSsl = true;
-            smtp.Send(m);
+            string subjMail = "Покупка в книжном магазине";
+
+
+            // вызов метода отправки на почту
+            _emailSender.SendEmail(login, subjMail, bodyMail);
 
             return lineCollection;
         }

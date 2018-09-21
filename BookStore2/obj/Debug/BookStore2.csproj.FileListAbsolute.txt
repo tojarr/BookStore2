@@ -97,3 +97,11 @@ D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\PagedList.dll
 D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\PagedList.Mvc.dll
 D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\PagedList.xml
 D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\PagedList.Mvc.xml
+D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\Ninject.dll
+D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\Ninject.Web.Common.dll
+D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\Ninject.Web.Common.WebHost.dll
+D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\Ninject.Web.Mvc.dll
+D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\Ninject.xml
+D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\Ninject.Web.Common.xml
+D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\Ninject.Web.Common.WebHost.xml
+D:\SergProjMVC\BookStore\BookStore2\BookStore2\bin\Ninject.Web.Mvc.xml

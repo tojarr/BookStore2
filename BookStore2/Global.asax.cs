@@ -1,4 +1,8 @@
 ﻿using BookStore2.Models;
+using BookStore2.Util;
+using Ninject;
+using Ninject.Modules;
+using Ninject.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,12 +19,17 @@ namespace BookStore2
         protected void Application_Start()
         {
             Database.SetInitializer(new BookDbInitializer());
-            //Database.SetInitializer(new UserDbInitializer());
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            // внедрение зависимостей
+            NinjectModule registrations = new NinjectRegistrations();
+            var kernel = new StandardKernel(registrations);
+            kernel.Unbind<ModelValidatorProvider>();
+            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }
     }
 }

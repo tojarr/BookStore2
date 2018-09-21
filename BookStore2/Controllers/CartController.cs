@@ -1,4 +1,5 @@
 ﻿using BookStore2.Models;
+using BookStore2.Serveces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,6 +13,12 @@ namespace BookStore2.Controllers
     {
         // создаем контекст данных
         BookContext db = new BookContext();
+        private IEmailSender _emailSender;
+
+        public CartController(IEmailSender emailSender)
+        {
+            _emailSender = emailSender;
+        }
 
         public ViewResult Index(string returnUrl)
         {
@@ -69,7 +76,7 @@ namespace BookStore2.Controllers
         {
             List<CartLine> lineCollection = new List<CartLine>();
             string login = User.Identity.Name;
-            lineCollection = GetCart().SendMail(login, db);
+            lineCollection = GetCart().SendMail(login, db, _emailSender);
 
             if (lineCollection != null)
             {
