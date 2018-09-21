@@ -63,7 +63,7 @@
                     {
                         using (Html.BeginForm("AddToCart", "Cart"))
                         {
-                            @Html.Hidden("bookId", b.Id)
+                            @Html.Hidden("Id", b.Id)
                             @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
                             <td>
                                 <input type="submit" class="btn btn-success" value="В корзину" />

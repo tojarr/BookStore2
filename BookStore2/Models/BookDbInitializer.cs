@@ -6,11 +6,11 @@ using System.Web;
 
 namespace BookStore2.Models
 {
-    public class BookDbInitializer : CreateDatabaseIfNotExists<BookContext>
+    public class BookDbInitializer : CreateDatabaseIfNotExists<EFDbContext>
     {
-        protected override void Seed(BookContext db)
+        protected override void Seed(EFDbContext db)
         {
-            db.Books.Add(new Book
+            db.Entities.Add(new Book
             {
                 Name = "Война и мир",
                 Author = "Л. Толстой"
@@ -22,7 +22,7 @@ namespace BookStore2.Models
                 ImagePath = "Images/War and Peace.png",
                 QuantityInStorage = 3
             });
-            db.Books.Add(new Book
+            db.Entities.Add(new Book
             {
                 Name = "Отцы и дети",
                 Author = "И. Тургенев"
@@ -33,7 +33,7 @@ namespace BookStore2.Models
                 ImagePath = "Images/Fathers and Sons.png",
                 QuantityInStorage = 3
             });
-            db.Books.Add(new Book
+            db.Entities.Add(new Book
             {
                 Name = "Чайка",
                 Author = "А. Чехов"
@@ -46,7 +46,7 @@ namespace BookStore2.Models
                 ImagePath = "Images/The Sea Gull.png",
                 QuantityInStorage = 0
             });
-            db.Books.Add(new Book
+            db.Entities.Add(new Book
             {
                 Name = "Звездные войны.Эпизод 7.",
                 Author = "А. Д. Фостер"
@@ -62,7 +62,7 @@ namespace BookStore2.Models
                 ImagePath = "Images/StarWarsEpizod7.png",
                 QuantityInStorage = 3
             });
-            db.Books.Add(new Book
+            db.Entities.Add(new Book
             {
                 Name = "Звездные войны.Эпизод 2.",
                 Author = "Роберт Сальваторе",
@@ -85,7 +85,7 @@ namespace BookStore2.Models
                 QuantityInStorage = 3
             });
 
-            db.Users.Add(new User { Email = "matroskin0711@gmail.com", Pass = "admin", IsAdmin = true });
+            db.Entities.Add(new User { Email = "matroskin0711@gmail.com", Pass = "admin", IsAdmin = true });
 
             base.Seed(db);
         }

@@ -7,10 +7,10 @@ using System.Web;
 
 namespace BookStore2.Models
 {
-    public class BookViewModel
+    public class BookViewModel: BaseEntity
     {
         // ID книги
-        public int Id { get; set; }
+        public int BookId { get; set; }
         // название книги
         [Required]
         [DisplayName("Название")]

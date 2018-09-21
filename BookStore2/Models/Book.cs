@@ -7,14 +7,16 @@ using System.Web;
 
 namespace BookStore2.Models
 {
-    public class Book
+    public class Book: BaseEntity
     {
         // ID книги
-        public int Id { get; set; }
+        public int BookId { get; set; }
         // название книги
+        [Required]
         [DisplayName("Название")]
         public string Name { get; set; }
         // автор книги
+        [Required]
         [DisplayName("Автор")]
         public string Author { get; set; }
         // цена

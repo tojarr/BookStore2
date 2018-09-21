@@ -1,4 +1,5 @@
 ﻿using BookStore2.Models;
+using BookStore2.Models.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,7 +11,12 @@ namespace BookStore2.Controllers
 {
     public class BookController : Controller
     {
-        BookContext db = new BookContext();
+        IRepository<Book> _repo;
+
+        public BookController(IRepository<Book> repo)
+        {
+            _repo = repo;
+        }
 
         [HttpGet]
         public ActionResult Create()
@@ -49,7 +55,7 @@ namespace BookStore2.Controllers
             if (ModelState.IsValid)
             {
                 Book book = new Book();
-                if(model.ImagePath == null)
+                if (model.ImagePath == null)
                 {
                     book.ImagePath = "/Images/DefaultForBook.png";
                 }
@@ -64,15 +70,17 @@ namespace BookStore2.Controllers
                 book.Description = model.Description;
 
                 ViewBag.Message = "Валидация пройдена";
-                db.Entry(book).State = EntityState.Added;
-                db.SaveChanges();
+                _repo.Save(book);
+
+                //db.Entry(book).State = EntityState.Added;
+                //db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
 
             ViewBag.Message = "Запрос не прошел валидацию";
             return View(model);
 
-            
+
         }
 
         [HttpGet]
@@ -82,7 +90,9 @@ namespace BookStore2.Controllers
             {
                 return HttpNotFound();
             }
-            Book book = db.Books.Find(id);
+            //Book book = db.Books.Find(id);
+            Book book = _repo.Table.FirstOrDefault(b => b.Id == id);
+
             if (book != null)
             {
                 bool isAdmin = Request.Cookies["IsAdmin"]?.Value == "True" ? true : false;
@@ -125,29 +135,37 @@ namespace BookStore2.Controllers
                 {
                     book.ImagePath = "/Images/DefaultForBook.png";
                 }
-                db.Entry(book).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(book).State = EntityState.Modified;
+                //db.SaveChanges();
+                var editModel = _repo.GetById(book.Id);
+                editModel.Name = book.Name;
+                editModel.Author = book.Author;
+                editModel.Price = book.Price;
+                editModel.QuantityInStorage = book.QuantityInStorage;
+                editModel.ImagePath = book.ImagePath;
+                _repo.Edit(editModel);
+
                 return RedirectToAction("Index", "Home");
             }
 
             ViewBag.Message = "Запрос не прошел валидацию";
             return View(book);
 
-           
+
         }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            Book b = db.Books.Find(id);
-            if (b == null)
+            Book book = _repo.Table.FirstOrDefault(b => b.Id == id);
+            if (book == null)
             {
                 return HttpNotFound();
             }
             bool isAdmin = Request.Cookies["IsAdmin"]?.Value == "True" ? true : false;
             if (isAdmin)
             {
-                return View(b);
+                return View(book);
             }
             else
             {
@@ -157,13 +175,14 @@ namespace BookStore2.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Book b = db.Books.Find(id);
-            if (b == null)
+            Book book = _repo.Table.FirstOrDefault(b => b.Id == id);
+            if (book == null)
             {
                 return HttpNotFound();
             }
-            db.Books.Remove(b);
-            db.SaveChanges();
+            _repo.Delete(book);
+            //db.Books.Remove(book);
+            //db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
 
@@ -171,7 +190,7 @@ namespace BookStore2.Controllers
         public ActionResult ChoiceBook(int id)
         {
             // получаем из бд все объекты Book
-            var books = db.Books;
+            var books = _repo.Table;
 
             ViewBag.Id = id;
 

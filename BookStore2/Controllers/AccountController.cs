@@ -5,11 +5,20 @@ using System.Web;
 using System.Web.Security;
 using System.Web.Mvc;
 using BookStore2.Models;
+using BookStore2.Models.Abstract;
 
 namespace BookStore2.Controllers
 {
     public class AccountController : Controller
     {
+
+        IRepository<User> _repo;
+
+        public AccountController(IRepository<User> repo)
+        {
+            _repo = repo;
+        }
+
         public ActionResult Register()
         {
             return View();
@@ -21,20 +30,20 @@ namespace BookStore2.Controllers
             if (ModelState.IsValid)
             {
                 User user = null;
-                using (BookContext db = new BookContext())
-                {
-                    user = db.Users.FirstOrDefault(u => u.Email == model.Email);
-                }
+
+                user = _repo.Table.ToList().FirstOrDefault(u => u.Email == model.Email);
+
                 if (user == null)
                 {
                     // создаем нового пользователя
-                    using (BookContext db = new BookContext())
-                    {
-                        db.Users.Add(new User { Email = model.Email, Pass = model.Pass });
-                        db.SaveChanges();
+                    user = new User { Email = model.Email, Pass = model.Pass };
+                    _repo.Save(user);
 
-                        user = db.Users.Where(u => u.Email == model.Email && u.Pass == model.Pass).FirstOrDefault();
-                    }
+                    //db.Users.Add(new User { Email = model.Email, Pass = model.Pass });
+                    //db.SaveChanges();
+
+                    user = _repo.Table.ToList().Where(u => u.Email == model.Email && u.Pass == model.Pass).FirstOrDefault();
+
                     // если пользователь удачно добавлен в бд
                     if (user != null)
                     {
@@ -66,11 +75,10 @@ namespace BookStore2.Controllers
             {
                 // поиск пользователя в бд
                 User user = null;
-                using (BookContext db = new BookContext())
-                {
-                    user = db.Users.FirstOrDefault(u => u.Email == model.Email && u.Pass == model.Pass);
 
-                }
+                //user = db.Users.FirstOrDefault(u => u.Email == model.Email && u.Pass == model.Pass);
+                user = _repo.Table.ToList().FirstOrDefault(u => u.Email == model.Email && u.Pass == model.Pass);
+
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, true);

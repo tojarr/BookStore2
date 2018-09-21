@@ -60,7 +60,7 @@ namespace BookStore2.Models
             lineCollection.Clear();
         }
 
-        public List<CartLine> SendMail(string login, BookContext dataBase,IEmailSender _emailSender)
+        public List<CartLine> SendMail(string login, IQueryable<Book> dataBase, IEmailSender _emailSender)
         {
             decimal sum = ComputeTotalValue();
             string shopList = "<tr><td>" +
@@ -70,12 +70,12 @@ namespace BookStore2.Models
                 "Цена</td><td>" +
                 "Сумма" +
                 "</td></tr>";
-            
-            BookContext db = dataBase;
+
+            //BookContext db = dataBase;
 
             foreach (var line in lineCollection)
             {
-                Book book = db.Books.Find(line.Book.Id);
+                Book book = dataBase.FirstOrDefault(b => b.Id == line.Book.Id);
                 if (line.Quantity > book.QuantityInStorage)
                 {
                     return null;

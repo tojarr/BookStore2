@@ -1,4 +1,5 @@
 ﻿using BookStore2.Models;
+using BookStore2.Models.Abstract;
 using BookStore2.Serveces;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,15 @@ namespace BookStore2.Controllers
     public class CartController : Controller
     {
         // создаем контекст данных
-        BookContext db = new BookContext();
-        private IEmailSender _emailSender;
+        //BookContext db = new BookContext();
 
-        public CartController(IEmailSender emailSender)
+        private IEmailSender _emailSender;
+        IRepository<Book> _repo;
+
+        public CartController(IEmailSender emailSender, IRepository<Book> repo)
         {
             _emailSender = emailSender;
+            _repo = repo;
         }
 
         public ViewResult Index(string returnUrl)
@@ -41,9 +45,10 @@ namespace BookStore2.Controllers
         }
 
         [Authorize]
-        public RedirectToRouteResult AddToCart(int bookId, string returnUrl)
+        public RedirectToRouteResult AddToCart(int Id, string returnUrl)
         {
-            Book book = db.Books.FirstOrDefault(b => b.Id == bookId);
+            //Book book = db.Books.FirstOrDefault(b => b.BookId == bookId);
+            Book book = _repo.GetById(Id);
 
             if (book != null)
             {
@@ -55,7 +60,7 @@ namespace BookStore2.Controllers
 
         public RedirectToRouteResult RemoveFromCart(int bookId, string returnUrl)
         {
-            Book book = db.Books.FirstOrDefault(b => b.Id == bookId);
+            Book book = _repo.GetById(bookId);
 
             if (book != null)
             {
@@ -76,22 +81,25 @@ namespace BookStore2.Controllers
         {
             List<CartLine> lineCollection = new List<CartLine>();
             string login = User.Identity.Name;
+            var db = _repo.Table;
             lineCollection = GetCart().SendMail(login, db, _emailSender);
 
             if (lineCollection != null)
             {
                 foreach (var line in lineCollection)
                 {
-                    Book b = db.Books.Find(line.Book.Id);
-                    if (b == null)
+                    //Book b = db.Books.Find(line.Book.Id);
+                    Book book = _repo.GetById(line.Book.Id);
+                    if (book == null)
                     {
                         return HttpNotFound();
                     }
                     else
                     {
-                        b.QuantityInStorage -= line.Quantity;
-                        db.Entry(b).State = EntityState.Modified;
-                        db.SaveChanges();
+                        book.QuantityInStorage -= line.Quantity;
+                        //db.Entry(book).State = EntityState.Modified;
+                        //db.SaveChanges();
+                        _repo.Edit(book);
                     }
                 }
                 GetCart().Clear();
