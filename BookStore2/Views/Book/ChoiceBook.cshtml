@@ -18,7 +18,7 @@
             <h2>Цена: </h2><p class="bookDesk">@b.Price</p>
             <h2>Кол-во на складе: </h2><p class="bookDesk">@b.QuantityInStorage</p>
             <h2>Описание: </h2>
-            <textarea cols="150" id="text" name="text" rows="10">@b.Description</textarea>
+            <textarea @*cols="50"*@ id="text" name="text" rows="10" class="textarea-discription">@b.Description</textarea>
             @*@Html.TextArea("text", b.Description, 10, 150, null)*@
         </div>
         @*<div class="bay">

@@ -19,6 +19,7 @@
                     <li class="navbar-btn">
                         @Html.ActionLink("Главная", "Index", "Home")
                     </li>
+                </ul>
             </div>
             <div class="header-menu-right">
                 <ul class="nav nav-pills">
@@ -46,12 +47,32 @@
             </div>
         </nav>
     </div>
-
-    @RenderBody()
-    <footer class="footer navbar-fixed-bottom panel-footer">
-        <div>
-            <p>Made by Scorpion Soft.</p>
+    <div class="body-size row">
+        @*<h3>Жанры</h3>*@
+        <div class="col-md-2 col-sm-2 col-xs-4">
+            <ul class="list-genre">
+                <li class=".list-genre-row">
+                    @Html.ActionLink("Главная", "Index", "Home")
+                </li>
+                <li class=".list-genre-row">
+                    @Html.ActionLink("Главная", "Index", "Home")
+                </li>
+                <li class=".list-genre-row">
+                    @Html.ActionLink("Главная", "Index", "Home")
+                </li>
+            </ul>
         </div>
+        <div class="col-md-10 col-sm-10 col-xs-8">
+            <div class="body-content">
+                @RenderBody()
+            </div>
+        </div>
+
+        <footer class="footer navbar-fixed-bottom panel-footer">
+            <div>
+                <p>Made by Scorpion Soft.</p>
+            </div>
         </footer>@*@RenderSection("Footer", false)</footer>*@
+    </div>
 </body>
 </html>

@@ -46,7 +46,7 @@
                 if (cart != null)
                 {
                     CartLine cartLine = cart.Lines.FirstOrDefault(x => x.Book.Id == b.Id);
-                    if(cartLine != null)
+                    if (cartLine != null)
                     {
                         cartQuantity = cartLine.Quantity;
                     }
@@ -90,7 +90,7 @@
     </div>
 
     <br />
-    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+    <pre class="page-text">Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</pre>
 
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
     <br />
