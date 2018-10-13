@@ -10,10 +10,14 @@ namespace BookStore2.Models
     {
         protected override void Seed(EFDbContext db)
         {
+            db.Entities.Add(new Genre { GenreBook ="Фантастика" });
+            db.Entities.Add(new Genre { GenreBook = "Классика" });
+            db.Entities.Add(new Genre { GenreBook = "Детектив" });
+
             db.Entities.Add(new Book
             {
                 Name = "Война и мир",
-                Genre = "Классика",
+                Genre = new Genre { GenreBook = "Классика" }.GenreBook,
                 Author = "Л. Толстой"
                 ,
                 Price = 220,
@@ -26,7 +30,7 @@ namespace BookStore2.Models
             db.Entities.Add(new Book
             {
                 Name = "Отцы и дети",
-                Genre = "Классика",
+                Genre = new Genre { GenreBook = "Классика" }.GenreBook,
                 Author = "И. Тургенев"
                 ,
                 Price = 180,
@@ -38,7 +42,7 @@ namespace BookStore2.Models
             db.Entities.Add(new Book
             {
                 Name = "Чайка",
-                Genre = "Классика",
+                Genre = new Genre { GenreBook = "Классика" }.GenreBook,
                 Author = "А. Чехов"
                 ,
                 Price = 150,
@@ -52,7 +56,7 @@ namespace BookStore2.Models
             db.Entities.Add(new Book
             {
                 Name = "Звездные войны.Эпизод 7.",
-                Genre = "Фантастика",
+                Genre = new Genre { GenreBook = "Фантастика" }.GenreBook,
                 Author = "А. Д. Фостер"
                 ,
                 Price = 250,
@@ -69,7 +73,7 @@ namespace BookStore2.Models
             db.Entities.Add(new Book
             {
                 Name = "Звездные войны.Эпизод 2.",
-                Genre = "Фантастика",
+                Genre = new Genre { GenreBook = "Фантастика" }.GenreBook,
                 Author = "Роберт Сальваторе",
                 Price = 250,
                 Description = "Звёздные войны. Эпизод II: Атака клонов (англ. Star Wars Episode II:" +

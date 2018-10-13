@@ -12,10 +12,12 @@ namespace BookStore2.Controllers
     public class BookController : Controller
     {
         IRepository<Book> _repo;
+        IRepository<Genre> _repoGenre;
 
-        public BookController(IRepository<Book> repo)
+        public BookController(IRepository<Book> repo, IRepository<Genre> repoGenre)
         {
             _repo = repo;
+            _repoGenre = repoGenre;
         }
 
         [HttpGet]
@@ -24,6 +26,8 @@ namespace BookStore2.Controllers
             bool isAdmin = Request.Cookies["IsAdmin"]?.Value == "True" ? true : false;
             if (isAdmin)
             {
+                SelectList genre = new SelectList(_repoGenre.Table.ToList(), "GenreBook", "GenreBook");
+                ViewBag.Genres = genre;
                 return View();
             }
             else
@@ -99,6 +103,8 @@ namespace BookStore2.Controllers
                 bool isAdmin = Request.Cookies["IsAdmin"]?.Value == "True" ? true : false;
                 if (isAdmin)
                 {
+                    SelectList genre = new SelectList(_repoGenre.Table.ToList(), "GenreBook", "GenreBook");
+                    ViewBag.Genres = genre;
                     return View(book);
                 }
                 else

@@ -33,6 +33,7 @@ namespace BookStore2.Models
         {
             modelBuilder.Entity<Book>().ToTable("Book");
             modelBuilder.Entity<User>().ToTable("User");
+            modelBuilder.Entity<Genre>().ToTable("Genre");
         }
     }
 
