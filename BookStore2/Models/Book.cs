@@ -15,6 +15,10 @@ namespace BookStore2.Models
         [Required]
         [DisplayName("Название")]
         public string Name { get; set; }
+        // жанр
+        [Required]
+        [DisplayName("Жанр")]
+        public string Genre { get; set; }
         // автор книги
         [Required]
         [DisplayName("Автор")]

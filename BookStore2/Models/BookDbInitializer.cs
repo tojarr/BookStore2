@@ -13,6 +13,7 @@ namespace BookStore2.Models
             db.Entities.Add(new Book
             {
                 Name = "Война и мир",
+                Genre = "Классика",
                 Author = "Л. Толстой"
                 ,
                 Price = 220,
@@ -25,6 +26,7 @@ namespace BookStore2.Models
             db.Entities.Add(new Book
             {
                 Name = "Отцы и дети",
+                Genre = "Классика",
                 Author = "И. Тургенев"
                 ,
                 Price = 180,
@@ -36,6 +38,7 @@ namespace BookStore2.Models
             db.Entities.Add(new Book
             {
                 Name = "Чайка",
+                Genre = "Классика",
                 Author = "А. Чехов"
                 ,
                 Price = 150,
@@ -49,6 +52,7 @@ namespace BookStore2.Models
             db.Entities.Add(new Book
             {
                 Name = "Звездные войны.Эпизод 7.",
+                Genre = "Фантастика",
                 Author = "А. Д. Фостер"
                 ,
                 Price = 250,
@@ -65,6 +69,7 @@ namespace BookStore2.Models
             db.Entities.Add(new Book
             {
                 Name = "Звездные войны.Эпизод 2.",
+                Genre = "Фантастика",
                 Author = "Роберт Сальваторе",
                 Price = 250,
                 Description = "Звёздные войны. Эпизод II: Атака клонов (англ. Star Wars Episode II:" +

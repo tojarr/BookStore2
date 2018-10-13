@@ -64,6 +64,7 @@ namespace BookStore2.Controllers
                     book.ImagePath = model.ImagePath;
                 }
                 book.Name = model.Name;
+                book.Genre = model.Genre;
                 book.Author = model.Author;
                 book.Price = model.Price;
                 book.QuantityInStorage = model.QuantityInStorage;
@@ -139,6 +140,7 @@ namespace BookStore2.Controllers
                 //db.SaveChanges();
                 var editModel = _repo.GetById(book.Id);
                 editModel.Name = book.Name;
+                editModel.Genre = book.Genre;
                 editModel.Author = book.Author;
                 editModel.Price = book.Price;
                 editModel.QuantityInStorage = book.QuantityInStorage;
